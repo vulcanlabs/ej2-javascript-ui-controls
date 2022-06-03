@@ -19,11 +19,11 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "lib": ["es5", "es2015.promise", "dom"],
-    "types": ["jasmine","jasmine-ajax","requirejs","chai"],
+    "typeRoots": ["./node_modules/@types/jasmine"],
+    "types": ["jasmine","jasmine-ajax","chai"],
     "suppressImplicitAnyIndexErrors": true    
   },
   "exclude": [
-    "node_modules",
     "dist",
     "public",
     "coverage",

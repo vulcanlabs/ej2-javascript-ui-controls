@@ -2,15 +2,11 @@
 
 var gulp = require('gulp');
 
-/**
- * Build ts and scss files
- */
-gulp.task('build', ['scripts', 'styles']);
 
 /**
  * Compile ts files
  */
-gulp.task('scripts', function(done) {
+ gulp.task('scripts', function(done) {
     var ts = require('gulp-typescript');
     var tsProject = ts.createProject('tsconfig.json', { typescript: require('typescript') });
 
@@ -26,7 +22,7 @@ gulp.task('scripts', function(done) {
  * Compile styles
  */
 gulp.task('styles', function() {
-    var sass = require('gulp-sass');
+    const sass = require('gulp-sass')(require('sass'));
     return gulp.src(['./**/*.scss', '!./node_modules/**/*.scss'], { base: './' })
         .pipe(sass({
             outputStyle: 'expanded',
@@ -60,6 +56,13 @@ gulp.task('test', function(done) {
         startKarma(done);
     }
 });
+
+/**
+ * Build ts and scss files
+ */
+gulp.task('build', gulp.series('scripts'));
+
+
 
 function startKarma(done) {
     var karma = require('karma');

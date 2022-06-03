@@ -34,7 +34,7 @@ let sfdtFileCreatedinMvc: any = {
             "inlines": [
               {
                 "characterFormat": {},
-                "text": "WMF � "
+                "text": "WMF"
               },
               {
                 "characterFormat": {},

@@ -3951,7 +3951,7 @@ describe('Slider Control', () => {
             L10n.load({
                 'de-DE': {
                     'slider': {
-                        incrementTitle: 'Erh�hen, ansteigen', decrementTitle: 'verringern'
+                        incrementTitle: 'Erhen, ansteigen', decrementTitle: 'verringern'
                     }
                 }
             });
@@ -3960,7 +3960,7 @@ describe('Slider Control', () => {
             slider = new Slider({ value: 10, showButtons: true, locale: 'en-US' }, '#slider');
             slider.locale = 'de-DE';
             slider.dataBind();
-            expect(document.getElementsByClassName('e-slider-button')[1].getAttribute('title')).toBe('Erh�hen, ansteigen');
+            expect(document.getElementsByClassName('e-slider-button')[1].getAttribute('title')).toBe('Eren, ansteigen');
         })
         afterEach(() => {
             document.body.innerHTML = '';

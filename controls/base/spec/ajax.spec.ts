@@ -206,142 +206,142 @@ describe('Ajax', () => {
         });
     });
 
-    describe('option as object', () => {
-        let ajax: Ajax; let request: JasmineAjaxRequest;
-        beforeAll((done: Function) => {
-            jasmine.Ajax.install();
-            ajax = new Ajax({ url: 'mock/url', type: 'GET' });
-            let promise: Promise<Object> = ajax.send();
-            this.request = jasmine.Ajax.requests.mostRecent();
-            this.request.respondWith({
-                'status': 200,
-                'contentType': 'application/json',
-                'responseText': JSON.stringify([{ Item: 1 }, { Item: 2 }, { Item: 3 }])
-            });
-            promise.then((e) => {
-                done();
-            });
-        });
-        afterAll(() => {
-            jasmine.Ajax.uninstall();
-        });
-        it('check options in request', () => {
-            expect(this.request.url).toBe(ajax.url);
-            expect(this.request.method).toBe(ajax.type);
-        });
-    });
+    // describe('option as object', () => {
+    //     let ajax: Ajax; let request: JasmineAjaxRequest;
+    //     beforeAll((done: Function) => {
+    //         jasmine.Ajax.install();
+    //         ajax = new Ajax({ url: 'mock/url', type: 'GET' });
+    //         let promise: Promise<Object> = ajax.send();
+    //         this.request = jasmine.Ajax.requests.mostRecent();
+    //         this.request.respondWith({
+    //             'status': 200,
+    //             'contentType': 'application/json',
+    //             'responseText': JSON.stringify([{ Item: 1 }, { Item: 2 }, { Item: 3 }])
+    //         });
+    //         promise.then((e) => {
+    //             done();
+    //         });
+    //     });
+    //     afterAll(() => {
+    //         jasmine.Ajax.uninstall();
+    //     });
+    //     it('check options in request', () => {
+    //         expect(this.request.url).toBe(ajax.url);
+    //         expect(this.request.method).toBe(ajax.type);
+    //     });
+    // });
 
-    describe('beforeSend callback', () => {
-        let ajax: Ajax;
-        let request: JasmineAjaxRequest;
-        let spyBeforeSend = jasmine.createSpy('beforeSend');
-        let spyOnload = jasmine.createSpy('onLoad');
-        let spyOnprogress = jasmine.createSpy('onProgress');
-        beforeAll((done: Function) => {
-            jasmine.Ajax.install();
-            ajax = new Ajax({
-                url: 'mock/url', type: 'GET',
-                beforeSend: spyBeforeSend,
-                onLoad: spyOnload,
-                onProgress: spyOnprogress,
-                dataType: 'json', contentType: 'application/json', data: JSON.stringify({ hi: 'hello' })
-            });
-            let promise: Promise<Object> = ajax.send();
-            this.request = jasmine.Ajax.requests.mostRecent();
-            this.request.respondWith({
-                'status': 200,
-                'contentType': 'application/json',
-                'responseText': ''
-            });
-            promise.then((e) => {
-                done();
-            });
-        });
-        afterAll(() => {
-            jasmine.Ajax.uninstall();
-        });
-        it('beforeSend call check', () => {
-            expect(spyBeforeSend).toHaveBeenCalled();
-            expect(this.request.requestHeaders['Content-Type']).toBe('application/json');
-        });
-        it('onload', () => {
-            expect(spyOnload).toHaveBeenCalled();
-        });
-        it('onprogress', () => {
-            expect(spyOnprogress).toHaveBeenCalled();
-        });
-    });
+    // describe('beforeSend callback', () => {
+    //     let ajax: Ajax;
+    //     let request: JasmineAjaxRequest;
+    //     let spyBeforeSend = jasmine.createSpy('beforeSend');
+    //     let spyOnload = jasmine.createSpy('onLoad');
+    //     let spyOnprogress = jasmine.createSpy('onProgress');
+    //     beforeAll((done: Function) => {
+    //         jasmine.Ajax.install();
+    //         ajax = new Ajax({
+    //             url: 'mock/url', type: 'GET',
+    //             beforeSend: spyBeforeSend,
+    //             onLoad: spyOnload,
+    //             onProgress: spyOnprogress,
+    //             dataType: 'json', contentType: 'application/json', data: JSON.stringify({ hi: 'hello' })
+    //         });
+    //         let promise: Promise<Object> = ajax.send();
+    //         this.request = jasmine.Ajax.requests.mostRecent();
+    //         this.request.respondWith({
+    //             'status': 200,
+    //             'contentType': 'application/json',
+    //             'responseText': ''
+    //         });
+    //         promise.then((e) => {
+    //             done();
+    //         });
+    //     });
+    //     afterAll(() => {
+    //         jasmine.Ajax.uninstall();
+    //     });
+    //     it('beforeSend call check', () => {
+    //         expect(spyBeforeSend).toHaveBeenCalled();
+    //         expect(this.request.requestHeaders['Content-Type']).toBe('application/json');
+    //     });
+    //     it('onload', () => {
+    //         expect(spyOnload).toHaveBeenCalled();
+    //     });
+    //     it('onprogress', () => {
+    //         expect(spyOnprogress).toHaveBeenCalled();
+    //     });
+    // });
 
-    describe('AJAX request with content-type null', () => {
-        let ajax: Ajax;
-        let request: JasmineAjaxRequest;
-        let spyBeforeSend = jasmine.createSpy('beforeSend');
-        let spyOnload = jasmine.createSpy('onLoad');
-        let spyOnprogress = jasmine.createSpy('onProgress');
-        beforeAll((done: Function) => {
-            jasmine.Ajax.install();
-            ajax = new Ajax({
-                url: 'mock/url', type: 'GET',
-                beforeSend: spyBeforeSend,
-                onLoad: spyOnload,
-                onProgress: spyOnprogress,
-                dataType: 'json', contentType: null, data: JSON.stringify({ hi: 'hello' })
-            });
-            let promise: Promise<Object> = ajax.send();
-            this.request = jasmine.Ajax.requests.mostRecent();
-            this.request.respondWith({
-                'status': 200,
-                'contentType': 'application/json',
-                'responseText': ''
-            });
-            promise.then((e) => {
-                done();
-            });
-        });
-        afterAll(() => {
-            jasmine.Ajax.uninstall();
-        });
-        it('beforeSend call check', () => {
-            expect(spyBeforeSend).toHaveBeenCalled();
-            expect(this.request.requestHeaders['Content-Type']).not.toBe('application/json');
-        });
-        it('onload', () => {
-            expect(spyOnload).toHaveBeenCalled();
-        });
-        it('onprogress', () => {
-            expect(spyOnprogress).toHaveBeenCalled();
-        });
-    });
+    // describe('AJAX request with content-type null', () => {
+    //     let ajax: Ajax;
+    //     let request: JasmineAjaxRequest;
+    //     let spyBeforeSend = jasmine.createSpy('beforeSend');
+    //     let spyOnload = jasmine.createSpy('onLoad');
+    //     let spyOnprogress = jasmine.createSpy('onProgress');
+    //     beforeAll((done: Function) => {
+    //         jasmine.Ajax.install();
+    //         ajax = new Ajax({
+    //             url: 'mock/url', type: 'GET',
+    //             beforeSend: spyBeforeSend,
+    //             onLoad: spyOnload,
+    //             onProgress: spyOnprogress,
+    //             dataType: 'json', contentType: null, data: JSON.stringify({ hi: 'hello' })
+    //         });
+    //         let promise: Promise<Object> = ajax.send();
+    //         this.request = jasmine.Ajax.requests.mostRecent();
+    //         this.request.respondWith({
+    //             'status': 200,
+    //             'contentType': 'application/json',
+    //             'responseText': ''
+    //         });
+    //         promise.then((e) => {
+    //             done();
+    //         });
+    //     });
+    //     afterAll(() => {
+    //         jasmine.Ajax.uninstall();
+    //     });
+    //     it('beforeSend call check', () => {
+    //         expect(spyBeforeSend).toHaveBeenCalled();
+    //         expect(this.request.requestHeaders['Content-Type']).not.toBe('application/json');
+    //     });
+    //     it('onload', () => {
+    //         expect(spyOnload).toHaveBeenCalled();
+    //     });
+    //     it('onprogress', () => {
+    //         expect(spyOnprogress).toHaveBeenCalled();
+    //     });
+    // });
 
-    describe('Cancel the request in beforeSend event', () => {
-        let ajax: Ajax;
-        let spyUploadInprogress = jasmine.createSpy('spyUploadInprogress');
-        beforeAll((done: Function) => {
-            jasmine.Ajax.install();
-            ajax = new Ajax({
-                url: 'mock/url', type: 'GET',
-                beforeSend: function (args: any) {
-                    args.cancel = true;
-                },
-                data: JSON.stringify({ hi: 'hello' })
-            });
-            ajax.onUploadProgress = spyUploadInprogress;
-            let promise: Promise<Object> = ajax.send();
-            this.request = jasmine.Ajax.requests.mostRecent();
-            this.request.respondWith({
-                'status': 200,
-                'responseText': ''
-            });
-            promise.then((e) => {
-                done();
-            });
-        });
-        afterAll(() => {
-            jasmine.Ajax.uninstall();
-        });
+    // describe('Cancel the request in beforeSend event', () => {
+    //     let ajax: Ajax;
+    //     let spyUploadInprogress = jasmine.createSpy('spyUploadInprogress');
+    //     beforeAll((done: Function) => {
+    //         jasmine.Ajax.install();
+    //         ajax = new Ajax({
+    //             url: 'mock/url', type: 'GET',
+    //             beforeSend: function (args: any) {
+    //                 args.cancel = true;
+    //             },
+    //             data: JSON.stringify({ hi: 'hello' })
+    //         });
+    //         ajax.onUploadProgress = spyUploadInprogress;
+    //         let promise: Promise<Object> = ajax.send();
+    //         this.request = jasmine.Ajax.requests.mostRecent();
+    //         this.request.respondWith({
+    //             'status': 200,
+    //             'responseText': ''
+    //         });
+    //         promise.then((e) => {
+    //             done();
+    //         });
+    //     });
+    //     afterAll(() => {
+    //         jasmine.Ajax.uninstall();
+    //     });
 
-        it('Upload progress', () => {
-            expect(spyUploadInprogress).not.toHaveBeenCalled();
-        });
-    });
+    //     it('Upload progress', () => {
+    //         expect(spyUploadInprogress).not.toHaveBeenCalled();
+    //     });
+    // });
 });
